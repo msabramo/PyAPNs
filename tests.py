@@ -9,16 +9,6 @@ import os
 import time
 import unittest
 
-try:
-    unicode
-    # Python 2
-    def u(s):
-        return unicode(s, 'unicode_escape')
-except NameError:
-    # Python 3
-    def u(s):
-        return s
-
 TEST_CERTIFICATE = "certificate.pem" # replace with path to test certificate
 
 NUM_MOCK_TOKENS = 10
@@ -31,7 +21,7 @@ for i in range(0, NUM_MOCK_TOKENS):
 def mock_chunks_generator():
     BUF_SIZE = 64
     # Create fake data feed
-    data = b''
+    data = b('')
 
     for t in mock_tokens:
         token_bin       = a2b_hex(t)

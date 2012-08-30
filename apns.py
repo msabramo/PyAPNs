@@ -38,6 +38,20 @@ try:
 except ImportError:
     import simplejson as json
 
+try:
+    unicode
+    # Python 2
+    def u(s):
+        return unicode(s, 'unicode_escape')
+    def b(s):
+        return s
+except NameError:
+    # Python 3
+    def u(s):
+        return s
+    def b(s):
+        return s.encode()
+
 MAX_PAYLOAD_LENGTH = 256
 
 class APNs(object):
@@ -236,7 +250,7 @@ class FeedbackConnection(APNsConnection):
         A generator that yields (token_hex, fail_time) pairs retrieved from
         the APNs feedback server
         """
-        buff = b''
+        buff = b('')
         for chunk in self._chunks():
             buff += chunk
 
@@ -287,7 +301,7 @@ class GatewayConnection(APNsConnection):
         payload_json = payload.json()
         payload_length_bin = APNs.packed_ushort_big_endian(len(payload_json))
 
-        notification = (b'\0' + token_length_bin + token_bin
+        notification = (b('\0') + token_length_bin + token_bin
             + payload_length_bin + payload_json)
 
         return notification
