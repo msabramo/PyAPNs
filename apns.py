@@ -181,8 +181,7 @@ class PayloadAlert(object):
         return d
 
 class PayloadTooLargeError(Exception):
-    def __init__(self):
-        super(PayloadTooLargeError, self).__init__()
+    pass
 
 class Payload(object):
     """A class representing an APNs message payload"""
